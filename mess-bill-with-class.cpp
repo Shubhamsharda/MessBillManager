@@ -28,7 +28,7 @@ int main()
     if( file.fail())
     {cout<<"Could not open the file";
      }
-     mess m;
+    mess m;
     int e;
     cout<<"Do you want to reset the bill? If yes then press 1";
     cin>>e;
@@ -54,7 +54,7 @@ int main()
                 cout<<"Add more";
                 m.addmeal(1);
                 file.write( (char*)&m,sizeof(m));
-                file.seekg(0);
+                file.seekg(0,ios::beg);
                 //m.showbill();
                //file.close();
            }
@@ -63,14 +63,14 @@ int main()
                 cout<<"special meal it is"<<endl;
                 m.addmeal(2);
                 file.write( (char*)&m,sizeof(m));
-                file.seekg(0);
+                file.seekg(0,ios::beg);
                // file.close();
            }
          //  fstream file2("mess.txt");
            //mess t;
            file.read((char*)&m,sizeof(m));
-           while(!file.eof())
-           {
+           //while(!file.eof())
+           //{
    //        file.read((char*)&m,sizeof(m));
            
            cout<<"the modified bill is:"<<endl;
@@ -79,7 +79,7 @@ int main()
            file.close();
            
            
-     }
+     
      
      getch();
      return 0;
