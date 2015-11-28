@@ -186,7 +186,7 @@ int d;
     {
    	  if(m.uid== i)
 	 {
-		  int j = file4.tellg();
+		   j = file4.tellg();
 		  cout<<" pointer position after match found is: "<<j;
 		  m.a = m.a + 10;   // make the seek function
 		  break;
@@ -199,7 +199,7 @@ int d;
    
    if(file5.eof())
    file5.clear();
-   file5.seekp(0,ios::beg);
+   file5.seekp(j-sizeof(m),ios::beg);
    cout<<"value of a before write "<<m.a<<endl;
    cout<<"pointer position before writing : "<<file5.tellp();
    cin.get(ch);
