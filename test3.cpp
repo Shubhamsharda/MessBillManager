@@ -64,7 +64,7 @@ int main()
 	file2.seekg(0);
 	
 	file2.read((char*)&m,sizeof(m));
-	while(file){
+	while(file2){
 		cout<<"account: "<<m.uid;
 		file2.read((char*)&m,sizeof(m));
 	}
