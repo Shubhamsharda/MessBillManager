@@ -195,23 +195,32 @@ int d;
     }
    file4.close();
    fstream file5;
-   file5.open("mess4.txt",ios::app);
+   file5.open("mess4.txt",ios::binary|ios::in|ios::out|ios::ate);
+   
+   if(file5.eof())
+   file5.clear();
    file5.seekp(0,ios::beg);
    cout<<"value of a before write "<<m.a<<endl;
    cout<<"pointer position before writing : "<<file5.tellp();
+   cin.get(ch);
+   
    file5.write((char*)&m,sizeof(m));
-   file5.close();
 
 
- /*To Show the updated file */
- fstream file6;
- file6.open("mess4.txt",ios::in|ios::binary);
- while(file6.read((char*)&m,sizeof(m)))
+  
+
+
+ 
+ //To Show the updated file 
+ 
+ file5.seekg(0);
+ 
+  while(file5.read((char*)&m,sizeof(m)))
  {
- 	cout<<"Account :"<<m.uid<<" : "<<m.a<<endl;
+ 	cout<<"\nAccount :"<<m.uid<<" : "<<m.a<<endl;
  	
  }
- file6.close();
+ file5.close();
 cout<<endl;
 	getch();
 	return 0;
