@@ -87,17 +87,17 @@ int main()
                                                               //modify
    
    
-   fstream file2;
-   file2.open("mess4.txt",ios::ate|ios::out|ios::in|ios::app);
+   /*fstream file2;
+   file2.open("mess4.txt",ios::ate|ios::out|ios::in|ios::binary);   //doubt!!! binary to be added??
    cout<<endl<<"Enter the uid whose contents you want to modify"<<endl;
    int y;
    cin>>y;
    int found1 =0;
-   while(!file2.eof())
+   while(!file2.eof())    //file opened in ate mode..pointer should be at the end???
    {
    	 file2.read((char*)&m,sizeof(m));
    	 if(y == m.uid)
-   	 {    file2.seekg(-sizeof(m),ios::cur) ;
+   	 {   // file2.seekg(-sizeof(m),ios::cur) ;
 				 int g=file2.tellg();
    	// 	m.modify();
         cout<<"current uid and amount is"<<endl;
@@ -105,12 +105,12 @@ int main()
             
 			 m.a=m.a+10;
 	 	 	found = 1;
-	 	 if(file2.eof())
+	 	 if(file2.eof())    //cheak the validity of this!!
              file2.clear();
-            file2.seekp(g);
+            file2.seekp(g-1,ios::beg);
   // 	 	file2.seekp(-sizeof(m), ios::cur);  //doubt
-             cin.get(ch);
-   	 	file2.write((char*)&m,sizeof(m))<<flush; 
+             cin.get(ch);   //whats the use of this?? to eat enter. back slash n eater?????
+   	 	file2.write((char*)&m,sizeof(m))<<flush; //use of flush?
 			cout<<"\nafter modification "<<" uid :"<<m.uid<<" u.a "<<m.a;
 			             
 		}
@@ -131,7 +131,7 @@ int main()
     
 	
 	fstream file3;
-	file3.open("mess4.txt",ios::in|ios::out|ios::binary|ios::app);
+	file3.open("mess4.txt",ios::in|ios::out|ios::binary|ios::ate); //cheak append!
 	file3.seekg(0);
 int d;
 	cout<<"\nenter uid"<<endl;
@@ -140,9 +140,9 @@ int d;
 	while(!file3.eof())
 	   
 	 {
-	   if(m.uid == u)
+	   if(m.uid == d)
 	   {
-	   	 
+	   	 file3.read((char*)&m,sizeof(m));
 		 cout<<"uid and amount is ==>";              //i should aad ate mode while opening file..
 	   	 cout<<m.uid<<" and "<<m.a;
 	   	 found2 = 1;
@@ -163,7 +163,7 @@ int d;
 
      file3.close();
    
-   
+   */
    
         
 /*	fstream file2;
@@ -175,7 +175,44 @@ int d;
 		cout<<"account: "<<m.uid<<" "<<m.a;
 		file2.read((char*)&m,sizeof(m));
 	}
-*/	cout<<endl;
+*/	
+   fstream file4;
+   file4.open("mess4.txt",ios::ate|ios::in|ios::binary);
+   cout<<"Enter the uid to modify"<<endl;
+   int i, j;
+   cin>>i;
+   file4.seekg(0,ios::beg);
+    while(file4.read((char*)&m,sizeof(m)))  // to modify
+    {
+   	  if(m.uid== i)
+	 {
+		  int j = file4.tellg();
+		  cout<<" pointer position after match found is: "<<j;
+		  m.a = m.a + 10;   // make the seek function
+		  break;
+	 }
+		
+    }
+   file4.close();
+   fstream file5;
+   file5.open("mess4.txt",ios::app);
+   file5.seekp(0,ios::beg);
+   cout<<"value of a before write "<<m.a<<endl;
+   cout<<"pointer position before writing : "<<file5.tellp();
+   file5.write((char*)&m,sizeof(m));
+   file5.close();
+
+
+ /*To Show the updated file */
+ fstream file6;
+ file6.open("mess4.txt",ios::in|ios::binary);
+ while(file6.read((char*)&m,sizeof(m)))
+ {
+ 	cout<<"Account :"<<m.uid<<" : "<<m.a<<endl;
+ 	
+ }
+ file6.close();
+cout<<endl;
 	getch();
 	return 0;
 }
